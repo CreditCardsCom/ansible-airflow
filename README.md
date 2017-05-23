@@ -1,5 +1,7 @@
 # Ansible Role: airflow
 
+[![Build Status](https://travis-ci.org/CreditCardsCom/ansible-airflow.svg?branch=master)](https://travis-ci.org/CreditCardsCom/ansible-airflow)
+
 Install and configure an [airflow](http://airflow.incubator.apache.org/) host. Can be used to configure master and worker nodes.
 
 ## Requirements
