@@ -1,6 +1,6 @@
-# Role Name
+# Ansible Role: airflow
 
-A brief description of the role goes here.
+Install and configure an [airflow](http://airflow.incubator.apache.org/) host. Can be used to configure master and worker nodes.
 
 ## Requirements
 
