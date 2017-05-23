@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+# Please do not modify this file manually.
+
+{% for section, config in (default_airflow | combine(airflow, recursive = True)).items() %}
+
+[{{ section }}]
+{% for key, value in config.items() | sort %}
+{{ key }} = {{ value }}
+{% endfor %}
+{% endfor %}

@@ -1,0 +1,9 @@
+---
+
+- name: Template out airflow configuration
+  template:
+    src: usr/share/airflow/airflow.cfg.j2
+    dest: "{{ airflow_install_directory }}/airflow.cfg"
+    mode: 0644
+    owner: "{{ airflow_user }}"
+    group: "{{ airflow_user }}"

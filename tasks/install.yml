@@ -1,0 +1,39 @@
+---
+
+- include: install-{{ ansible_os_family | lower }}.yml
+  when: ansible_os_family == 'Debian' or ansible_os_family == 'RedHat'
+
+- name: Install airflow
+  pip:
+    name: apache-airflow
+    version: "{{ airflow_version }}"
+
+# Work around for the pip module not quoting "apache-airflow[module, module]"
+- name: Install airflow extra packages
+  pip:
+    name: apache-airflow[{{ item }}]
+  with_items: "{{ airflow_extra_packages }}"
+
+- name: Create airflow user
+  user:
+    name: "{{ airflow_user }}"
+    createhome: false
+    system: true
+
+- name: Create airflow directory structure
+  file:
+    path: "{{ airflow_install_directory }}"
+    state: directory
+    recurse: true
+    mode: 0755
+    owner: "{{ airflow_user }}"
+    group: "{{ airflow_user }}"
+
+- name: Install systemd services
+  template:
+    src: etc/systemd/system/airflow-{{item}}.service.j2
+    dest: /etc/systemd/system/airflow-{{item}}.service
+  with_items: "{{ airflow_services }}"
+  notify:
+    - enable services
+    - restart services

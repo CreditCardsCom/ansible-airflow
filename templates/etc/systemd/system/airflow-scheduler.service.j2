@@ -1,0 +1,18 @@
+# {{ ansible_managed }}
+# Please do not modify this file manually.
+
+[Unit]
+Description=Airflow scheduler daemon
+After=network.target
+
+[Service]
+Environment="AIRFLOW_HOME={{ airflow_install_directory }}"
+User={{ airflow_user }}
+Group={{ airflow_user }}
+Type=simple
+ExecStart=/usr/local/bin/airflow scheduler -n 5
+Restart=always
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target

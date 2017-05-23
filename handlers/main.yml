@@ -1,0 +1,14 @@
+---
+
+- name: enable services
+  systemd:
+    name: airflow-{{item}}
+    daemon_reload: yes
+    enabled: yes
+  with_items: "{{ airflow_services }}"
+
+- name: restart services
+  systemd:
+    name: airflow-{{item}}
+    state: restarted
+  with_items: "{{ airflow_services }}"

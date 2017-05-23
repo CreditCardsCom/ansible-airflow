@@ -1,0 +1,13 @@
+---
+
+- name: Install python dependency
+  hosts: all
+  gather_facts: no
+  become: yes
+  pre_tasks:
+    - raw: which python || (apt-get -y install python-simplejson)
+
+- hosts: all
+  become: true
+  roles:
+    - ansible-airflow
