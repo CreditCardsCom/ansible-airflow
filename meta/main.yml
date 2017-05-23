@@ -3,7 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: creditcardscom
-  description: your description
+  description: Installs and configures the airflow project
   company: CreditCards.com
   license: license (MIT)
   min_ansible_version: 2.2
