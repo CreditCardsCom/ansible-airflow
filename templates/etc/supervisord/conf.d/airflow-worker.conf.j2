@@ -1,0 +1,15 @@
+[program:airflow-worker]
+command=/usr/local/bin/airflow worker
+environment=AIRFLOW_HOME="{{ airflow_install_directory }}"
+
+user={{ airflow_user }}
+
+autostart=true
+autorestart=true
+
+stdout_logfile={{ celery_log_dir }}/airflow-worker.log
+redirect_stderr = true
+
+priority=1001
+stdout_logfile_maxbytes=10MB
+stdout_logfile_backups=5
