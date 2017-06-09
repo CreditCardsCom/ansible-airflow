@@ -34,6 +34,11 @@
     src: etc/systemd/system/airflow-{{item}}.service.j2
     dest: /etc/systemd/system/airflow-{{item}}.service
   with_items: "{{ airflow_services }}"
+  when: use_systemd is defined and use_systemd
   notify:
     - enable services
     - restart services
+
+- name: Install supervisord services
+  include: install-supervisor.yml
+  when: use_supervisor is defined and use_supervisor

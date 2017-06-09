@@ -13,6 +13,10 @@ airflow_extra_packages:
   - ldap
   - alldbs
 
+# which control system should be used? activate only one, systemd used by default
+use_systemd: yes
+use_supervisor: no
+
 # services that will be enabled and started
 airflow_services:
   - webserver

@@ -1,0 +1,38 @@
+---
+
+- name: Create supervisor group
+  group:
+    name: supervisor
+    state: present
+
+- name: Add users to supervisor group
+  user:
+    name: "{{ item }}"
+    groups: supervisor
+    append: yes
+  with_items:
+    - "{{ airflow_user }}"
+    - root
+
+- name: remove line current chmod line from supervisor global config
+  lineinfile: dest=/etc/supervisor/supervisord.conf
+              state=absent
+              regexp='^chmod=0700'
+  notify: restart supervisord
+
+- name: add lines to supervisor global config to set permissions on socket
+  blockinfile:
+    dest: /etc/supervisor/supervisord.conf
+    insertafter: "file=/var/run/supervisor\\.sock.*"
+    block: |
+      chmod=0770 ; socket file mode (default 0700)
+      chown=root:supervisor
+    marker: "; {mark} ANSIBLE MANAGED BLOCK"
+  notify: restart supervisord
+
+- name: Copy over supervisor config template for each airflow service
+  template:
+    src: etc/systemd/system/airflow-{{item}}.service.j2
+    dest: /etc/systemd/system/airflow-{{item}}.service
+  with_items: "{{ airflow_services }}"
+  notify: restart supervisord
