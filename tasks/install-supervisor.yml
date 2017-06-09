@@ -1,5 +1,15 @@
 ---
 
+- name: Install Supervisor
+  apt: name=supervisor state=installed
+  tags:
+    - supervisor
+
+- name: Ensure supervisor service is started
+  service: name=supervisor state=started enabled=yes
+  tags:
+    - supervisor
+
 - name: Create supervisor group
   group:
     name: supervisor
@@ -36,3 +46,13 @@
     dest: /etc/systemd/system/airflow-{{item}}.service
   with_items: "{{ airflow_services }}"
   notify: restart supervisord
+
+- name: Re-read the Supervisor config files
+  command: supervisorctl reread
+  tags:
+    - celery
+
+- name: Update Supervisor to add the app in the process group
+  command: supervisorctl update
+  tags:
+    - celery
