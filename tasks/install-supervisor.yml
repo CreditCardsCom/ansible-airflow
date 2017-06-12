@@ -42,8 +42,8 @@
 
 - name: Copy over supervisor config template for each airflow service
   template:
-    src: etc/supervisor/conf.d/airflow-{{item}}.service.j2
-    dest: /etc/supervisor/conf.d/airflow-{{item}}.service
+    src: etc/supervisor/conf.d/airflow-{{item}}.conf.j2
+    dest: /etc/supervisor/conf.d/airflow-{{item}}.conf
   with_items: "{{ airflow_services }}"
   notify: restart supervisord
 
