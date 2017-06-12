@@ -6,6 +6,7 @@ airflow_user: airflow
 # airflow version to be installed
 airflow_version: 1.8.1
 airflow_install_directory: /usr/share/airflow
+airflow_bin: "/usr/local/bin/airflow"
 
 # extra packages to be installed with airflow
 airflow_extra_packages:
@@ -15,7 +16,14 @@ airflow_extra_packages:
 
 # which control system should be used? activate only one, systemd used by default
 use_systemd: yes
+
 use_supervisor: no
+
+### custom startup script template ###
+# if you need to define environment variable or otherwise set things up before
+# running the airflow service, you can provide a playbook path to 
+# custom jinja2 shell script template
+supervisor_start_template: "supervisor_start.sh.j2" 
 
 # services that will be enabled and started
 airflow_services:
