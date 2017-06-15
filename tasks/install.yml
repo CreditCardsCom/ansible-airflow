@@ -5,7 +5,7 @@
 
 - name: Install airflow
   pip:
-    name: apache-airflow
+    name: "{{ airflow_package }}"
     version: "{{ airflow_version }}"
 
 # Work around for the pip module not quoting "apache-airflow[module, module]"
