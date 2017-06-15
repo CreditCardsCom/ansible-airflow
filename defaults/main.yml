@@ -4,6 +4,7 @@
 airflow_user: airflow
 
 # airflow version to be installed
+airflow_package: apache-airflow
 airflow_version: 1.8.1
 airflow_install_directory: /usr/share/airflow
 
