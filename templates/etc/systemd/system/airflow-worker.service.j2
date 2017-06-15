@@ -10,7 +10,7 @@ Environment="AIRFLOW_HOME={{ airflow_install_directory }}"
 User={{ airflow_user }}
 Group={{ airflow_user }}
 Type=simple
-ExecStart=/usr/local/bin/airflow worker "{{ airflow_worker_arguments }}"
+ExecStart=/usr/local/bin/airflow worker {{ airflow_worker_arguments }}
 Restart=on-failure
 RestartSec=10s
 
