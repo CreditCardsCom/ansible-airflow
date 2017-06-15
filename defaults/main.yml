@@ -20,6 +20,10 @@ airflow_services:
   - scheduler
   - worker
 
+# start systemD services with arguments
+airflow_worker_arguments: ""
+airflow_scheduler_arguments: "-n 5"
+
 # default main airflow configuration in yaml form
 default_airflow:
   core:
