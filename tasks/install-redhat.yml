@@ -12,8 +12,3 @@
   easy_install:
     name: pip
 
-- name: Symlink /usr/bin/airflow to /usr/local/bin/airflow
-  file:
-    state: link
-    src: /usr/bin/airflow
-    dest: /usr/local/bin/airflow
