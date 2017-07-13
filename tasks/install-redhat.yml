@@ -7,8 +7,10 @@
     - gcc
     - python-setuptools
     - python-devel
+  tags: airflow_install
 
 - name: Install pip
   easy_install:
     name: pip
+  tags: airflow_install
 

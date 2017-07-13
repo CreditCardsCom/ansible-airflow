@@ -3,3 +3,4 @@
 - name: Install python-pip
   apt:
     name: python-pip
+  tags: airflow_install
