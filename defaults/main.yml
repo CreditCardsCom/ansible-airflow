@@ -4,6 +4,7 @@
 airflow_user: airflow
 
 # airflow version to be installed
+airflow_package: apache-airflow
 airflow_version: 1.8.1
 airflow_install_directory: /usr/share/airflow
 airflow_bin: "/usr/local/bin/airflow"
@@ -30,6 +31,10 @@ airflow_services:
   - webserver
   - scheduler
   - worker
+
+# start systemD services with arguments
+airflow_worker_arguments: ""
+airflow_scheduler_arguments: "-n 5"
 
 # default main airflow configuration in yaml form
 default_airflow:

@@ -7,3 +7,14 @@
     mode: 0644
     owner: "{{ airflow_user }}"
     group: "{{ airflow_user }}"
+  tags: 
+    - airflow_configure
+
+- name: Symlink /usr/bin/airflow to /usr/local/bin/airflow
+  file:
+    state: link
+    src: /usr/bin/airflow
+    dest: /usr/local/bin/airflow
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  tags: 
+    - airflow_configure

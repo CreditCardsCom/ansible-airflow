@@ -10,9 +10,9 @@ Environment="AIRFLOW_HOME={{ airflow_install_directory }}"
 User={{ airflow_user }}
 Group={{ airflow_user }}
 Type=simple
-ExecStart=/usr/local/bin/airflow webserver --pid /run/airflow/webserver.pid
-Restart=on-failure
-RestartSec=5s
+ExecStart=/bin/bash -c 'exec /usr/local/bin/airflow webserver --pid /run/airflow/webserver.pid 2>&1 >> {{ default_airflow.core.base_log_folder }}/airflow-webserver.log'
+Restart=always
+RestartSec=11s
 PrivateTmp=true
 RuntimeDirectory=airflow
 RuntimeDirectoryMode=755
