@@ -8,6 +8,7 @@
   pip:
     name: "{{ airflow_package }}"
     version: "{{ airflow_version }}"
+    virtualenv: "{{ virtualenv_path|default(omit) }}"
   tags: 
     - airflow_install
 
@@ -15,6 +16,7 @@
 - name: Install airflow extra packages
   pip:
     name: "{{ airflow_package }}[{{ item }}]"
+    virtualenv: "{{ virtualenv_path|default(omit) }}"
   with_items: "{{ airflow_extra_packages }}"
   tags: 
     - airflow_install
