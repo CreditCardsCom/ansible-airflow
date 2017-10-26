@@ -3,6 +3,7 @@
 - name: Install dependency packages
   yum:
     name: "{{ item }}"
+  update_cache: "{{ ansible_env.ANSIBLE_CONTAINER is defined }}"
   with_items:
     - gcc
     - python-setuptools
@@ -16,3 +17,6 @@
   tags: 
     - airflow_install
 
+- name: Clean yum cache
+  command: yum clean all
+  when: ansible_env.ANSIBLE_CONTAINER is defined and ansible_os_family == 'RedHat'

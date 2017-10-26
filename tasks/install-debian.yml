@@ -3,5 +3,10 @@
 - name: Install python-pip
   apt:
     name: python-pip
+    update_cache: "{{ ansible_env.ANSIBLE_CONTAINER is defined }}"
   tags:
     - airflow_install
+
+- name: Clean apt cache
+  command: apt-get clean
+  when: ansible_env.ANSIBLE_CONTAINER is defined and ansible_os_family == 'Debian'
