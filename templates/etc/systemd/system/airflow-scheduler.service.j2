@@ -8,7 +8,7 @@ After=network.target
 [Service]
 Environment="AIRFLOW_HOME={{ airflow_install_directory }}"
 User={{ airflow_user }}
-Group={{ airflow_user }}
+Group={{ airflow_group }}
 Type=simple
 ExecStart=/bin/bash -c 'exec /usr/local/bin/airflow scheduler {{ airflow_scheduler_arguments }} 2>&1 >> {{ default_airflow.core.base_log_folder }}/airflow-scheduler.log'
 Restart=always

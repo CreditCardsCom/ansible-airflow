@@ -15,7 +15,7 @@
     recurse: true
     mode: 0755
     owner: "{{ airflow_user }}"
-    group: "{{ airflow_user }}"
+    group: "{{ airflow_group }}"
   tags: 
     - airflow_setup
 
@@ -25,7 +25,7 @@
     dest: "{{ airflow_install_directory }}/airflow.cfg"
     mode: 0644
     owner: "{{ airflow_user }}"
-    group: "{{ airflow_user }}"
+    group: "{{ airflow_group }}"
   tags: 
     - airflow_configure
 

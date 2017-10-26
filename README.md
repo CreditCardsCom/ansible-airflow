@@ -24,6 +24,9 @@ Base airflow configuration variables:
 # User airflow should be started under
 airflow_user: airflow
 
+# Group airflow should be started under
+airflow_user: "{{ airflow_user }}
+
 # Airflow version to be installed
 airflow_version: 1.8.1
 

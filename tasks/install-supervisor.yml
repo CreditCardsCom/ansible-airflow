@@ -54,7 +54,7 @@
     src: "{{ supervisor_start_template }}"
     dest: "{{ airflow_install_directory }}/{{ item }}_start.sh"
     owner: "{{ airflow_user }}"
-    group: "{{ airflow_user }}"
+    group: "{{ airflow_group }}"
     mode: 0755
   vars: 
     service: "{{ item }}"

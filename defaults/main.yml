@@ -2,6 +2,7 @@
 
 # user which is created for use with airflow services
 airflow_user: airflow
+airflow_group: "{{ airflow_user }}"
 
 # airflow version to be installed
 airflow_package: apache-airflow
