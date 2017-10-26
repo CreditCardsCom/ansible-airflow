@@ -6,3 +6,13 @@
 
 - include: install.yml
 - include: configure.yml
+
+- name: Copy any extra templates specified
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ item.owner|default('root') }}"
+    group: "{{ item.group|default('root') }}"
+    mode: "{{ item.mode|default(0755) }}"
+  with_items: "{{ extra_templates }}"
+  when: extra_templates is defined and extra_templates
