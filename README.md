@@ -42,6 +42,18 @@ airflow_services:
   - worker
 ```
 
+Extra variables to support specific deployment patterns:
+
+```yml
+# determine whether and which process manager to setup
+use_systemd: yes
+use_supervisor: no
+
+# support installing airflow into a virtual environment
+# NOTE: required for use with ansible-container
+virtualenv_path: undefined
+```
+
 #### `airflow.cfg`
 The main airflow configuration happens with yaml objects, which is simply the default configuration `default_airflow` gets merged with any overrides found in the `airflow` object. All object keys will be templated into the `airflow.cfg` under the appropriate section. *All values are the default airflow values.*
 

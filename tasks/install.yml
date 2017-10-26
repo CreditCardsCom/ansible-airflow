@@ -9,6 +9,7 @@
     name: "{{ airflow_package }}"
     version: "{{ airflow_version }}"
     virtualenv: "{{ virtualenv_path|default(omit) }}"
+  when: ansible_env.ANSIBLE_CONTAINER is not defined
   tags: 
     - airflow_install
 
@@ -18,42 +19,14 @@
     name: "{{ airflow_package }}[{{ item }}]"
     virtualenv: "{{ virtualenv_path|default(omit) }}"
   with_items: "{{ airflow_extra_packages }}"
+  when: ansible_env.ANSIBLE_CONTAINER is not defined
   tags: 
     - airflow_install
 
-- name: Create airflow user
-  user:
-    name: "{{ airflow_user }}"
-    createhome: false
-    system: true
-  tags: 
-    - airflow_setup
+# Workaround to pip install within ansible-container
+- name: Install airflow with raw command
+  command: "env -i PATH=$PATH bash -c 'source {{ virtualenv_path }}/bin/activate && pip install {{ airflow_package }}[{{ airflow_extra_packages|join(',') }}]=={{ airflow_version }}'"
+  when: ansible_env.ANSIBLE_CONTAINER is defined
 
-- name: Create airflow directory structure
-  file:
-    path: "{{ airflow_install_directory }}"
-    state: directory
-    recurse: true
-    mode: 0755
-    owner: "{{ airflow_user }}"
-    group: "{{ airflow_user }}"
-  tags: 
-    - airflow_setup
 
-- name: Install systemd services
-  template:
-    src: etc/systemd/system/airflow-{{item}}.service.j2
-    dest: /etc/systemd/system/airflow-{{item}}.service
-  with_items: "{{ airflow_services }}"
-  when: use_systemd is defined and use_systemd
-  notify:
-    - enable services
-    - restart services
-  tags: 
-    - airflow_setup
 
-- name: Install supervisord services
-  include: install-supervisor.yml
-  when: use_supervisor is defined and use_supervisor
-  tags: 
-    - airflow_setup

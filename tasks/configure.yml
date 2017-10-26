@@ -1,5 +1,24 @@
 ---
 
+- name: Create airflow user
+  user:
+    name: "{{ airflow_user }}"
+    createhome: false
+    system: true
+  tags: 
+    - airflow_setup
+
+- name: Create airflow directory structure
+  file:
+    path: "{{ airflow_install_directory }}"
+    state: directory
+    recurse: true
+    mode: 0755
+    owner: "{{ airflow_user }}"
+    group: "{{ airflow_user }}"
+  tags: 
+    - airflow_setup
+
 - name: Template out airflow configuration
   template:
     src: usr/share/airflow/airflow.cfg.j2
@@ -18,3 +37,21 @@
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
   tags: 
     - airflow_configure
+
+- name: Install systemd services
+  template:
+    src: etc/systemd/system/airflow-{{item}}.service.j2
+    dest: /etc/systemd/system/airflow-{{item}}.service
+  with_items: "{{ airflow_services }}"
+  when: use_systemd is defined and use_systemd
+  notify:
+    - enable services
+    - restart services
+  tags: 
+    - airflow_setup
+
+- name: Install supervisord services
+  include: install-supervisor.yml
+  when: use_supervisor is defined and use_supervisor
+  tags: 
+    - airflow_setup
