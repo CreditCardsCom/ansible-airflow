@@ -10,7 +10,7 @@ Environment="AIRFLOW_HOME={{ airflow_install_directory }}"
 User={{ airflow_user }}
 Group={{ airflow_user }}
 Type=simple
-ExecStart=/bin/bash -c 'exec /usr/local/bin/airflow worker {{ airflow_worker_arguments }} 2>&1 >> {{ default_airflow.core.base_log_folder }}/airflow-worker.log'
+ExecStart=/bin/bash -c 'exec /usr/bin/airflow worker {{ airflow_worker_arguments }} 2>&1 >> {{ default_airflow.core.base_log_folder }}/airflow-worker.log'
 Restart=always
 RestartSec=11s
 
