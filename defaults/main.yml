@@ -148,5 +148,5 @@ default_airflow:
 airflow: {}
 
 # added because some packages can not install if not enough memory. gives option to pass pip arg --no-cache-dir
-airflow_install_pip_extra_args: []
-airflow_packages_pip_extra_args: []
+airflow_install_pip_extra_args: ''
+airflow_packages_pip_extra_args: ''
