@@ -8,6 +8,7 @@
   pip:
     name: "{{ airflow_package }}"
     version: "{{ airflow_version }}"
+    extra_args: "{{ airflow_install_pip_extra_args }}"
   tags: 
     - airflow_install
 
@@ -15,6 +16,7 @@
 - name: Install airflow extra packages
   pip:
     name: "{{ airflow_package }}[{{ item }}]"
+    extra_args: "{{ airflow_packages_pip_extra_args }}"
   with_items: "{{ airflow_extra_packages }}"
   tags: 
     - airflow_install
