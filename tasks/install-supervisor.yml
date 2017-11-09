@@ -43,7 +43,7 @@
 - name: Copy over supervisor config template for each airflow service
   template:
     src: etc/supervisor/conf.d/airflow-generic.conf.j2
-    dest: /etc/supervisor/conf.d/airflow-{{item}}.conf
+    dest: /etc/supervisor/conf.d/airflow-{{ item | replace('-', '') | replace(' ', '_') }}.conf
   with_items: "{{ airflow_services }}"
   vars:
     service: "{{ item }}"
