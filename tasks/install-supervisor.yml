@@ -52,7 +52,7 @@
 - name: Copy over supervisor startup script template for each airflow service
   template:
     src: "{{ supervisor_start_template }}"
-    dest: "{{ airflow_install_directory }}/{{ item }}_start.sh"
+    dest: "{{ airflow_install_directory }}/{{ item | replace('-', '') | replace(' ', '_') }}_start.sh"
     owner: "{{ airflow_user }}"
     group: "{{ airflow_group }}"
     mode: 0755
