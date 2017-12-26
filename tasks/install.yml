@@ -9,7 +9,7 @@
     name: "{{ airflow_package }}"
     version: "{{ airflow_version }}"
     extra_args: "{{ airflow_install_pip_extra_args }}"
-  tags: 
+  tags:
     - airflow_install
 
 # Work around for the pip module not quoting "apache-airflow[module, module]"
@@ -18,7 +18,7 @@
     name: "{{ airflow_package }}[{{ item }}]"
     extra_args: "{{ airflow_packages_pip_extra_args }}"
   with_items: "{{ airflow_extra_packages }}"
-  tags: 
+  tags:
     - airflow_install
 
 - name: Create airflow user
@@ -26,7 +26,7 @@
     name: "{{ airflow_user }}"
     createhome: false
     system: true
-  tags: 
+  tags:
     - airflow_setup
 
 - name: Create airflow directory structure
@@ -37,9 +37,20 @@
     mode: 0755
     owner: "{{ airflow_user }}"
     group: "{{ airflow_user }}"
-  tags: 
+  tags:
     - airflow_setup
 
+- name: Create airflow logs directory structure
+  file:
+    path: "{{ airflow_install_directory }}/logs"
+    state: directory
+    recurse: true
+    mode: 0755
+    owner: "{{ airflow_user }}"
+    group: "{{ airflow_user }}"
+  tags:
+    - airflow_setup
+    
 - name: Install systemd services
   template:
     src: etc/systemd/system/airflow-{{item}}.service.j2
@@ -48,5 +59,5 @@
   notify:
     - enable services
     - restart services
-  tags: 
+  tags:
     - airflow_setup
