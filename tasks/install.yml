@@ -42,7 +42,7 @@
 
 - name: Create airflow logs directory structure
   file:
-    path: "{{ airflow_install_directory }}/logs"
+    path: "{{ base_log_folder }}"
     state: directory
     recurse: true
     mode: 0755
@@ -50,7 +50,7 @@
     group: "{{ airflow_user }}"
   tags:
     - airflow_setup
-    
+
 - name: Install systemd services
   template:
     src: etc/systemd/system/airflow-{{item}}.service.j2
